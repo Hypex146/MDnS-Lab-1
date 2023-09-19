@@ -1,0 +1,110 @@
+A51 MACRO ASSEMBLER  LAB_1                                                                09/19/2023 21:13:47 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\lab-1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lab-1.a51 SET(SMALL) DEBUG PRINT(.\Listings\lab-1.lst) OBJECT(.\Objects
+                      \lab-1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; Start
+0000                   2             ORG     0000h                   ; (Starting address)
+  00C0                 3             P4              EQU 0C0h
+                       4     
+                       5     
+                       6     ; Writing a reference function to external memory
+0000 74E3              7             MOV     A, #0E3h                ; A := 11100011b (The first part of the reference f
+                             unction)
+0002 908000            8             MOV     DPTR, #8000h    ; DPTR := 8000h
+0005 F0                9             MOVX    @DPTR, A                ; [DPTR] := A
+0006 74C5             10             MOV     A, #0C5h                ; A := 11000101b (The second part of the reference 
+                             function)
+0008 908001           11             MOV     DPTR, #8001h    ; DPTR := 8001h
+000B F0               12             MOVX    @DPTR, A                ; [DPTR] := A
+                      13             
+                      14             
+                      15     ; Waiting for permission to start program execution
+000C C2C0             16             CLR             P4.0                    ; P4.0 := 0
+000E 30C0FD           17             JNB     P4.0, $                 ; if P4.0 == 0 then PC := PC
+0011 7800             18             MOV             R0, #00h                ; R0 := 00h
+                      19             
+                      20             
+                      21     ; Iterating through all input values
+0013                  22     CYCLE_1:
+0013 8820             23             MOV             20h, R0                 ; [20h] := R0 (Loading input values)
+                      24             
+                      25     ; Calculation of a logical function
+0015 A201             26             MOV             C, 1                    ; C := [20.1h]
+0017 B002             27             ANL             C, /2                   ; C := C and ![20.2h]
+0019 B003             28             ANL             C, /3                   ; C := C and ![20.3h]
+001B 9208             29             MOV             8, C                    ; [21.0h] := C (x1 * !x2 * !x3)
+001D A202             30             MOV             C, 2                    ; C := [20.2h]
+001F B000             31             ANL             C, /0                   ; C := C and ![20.0h]
+0021 B001             32             ANL             C, /1                   ; C := C and ![20.1h]
+0023 9209             33             MOV             9, C                    ; [21.1h] := C (x2 * !x0 * !x1)
+0025 A202             34             MOV             C, 2                    ; C := [20.2h]
+0027 B001             35             ANL             C, /1                   ; C := C and ![20.1h]
+0029 8203             36             ANL             C, 3                    ; C := C and [20.3h]
+002B 920A             37             MOV             10, C                   ; [21.2h] := C (x2 * !x1 * x3)
+002D A200             38             MOV             C, 0                    ; C := [20.0h]
+002F B002             39             ANL             C, /2                   ; C := C and ![20.2h]
+0031 8203             40             ANL             C, 3                    ; C := C and [20.3h] (x0 * !x2 * x3)
+0033 7208             41             ORL             C, 8                    ; C := C or [20.4h]
+0035 7209             42             ORL             C, 9                    ; C := C or [20.5h]
+0037 720A             43             ORL             C, 10                   ; C := C or [20.6h]
+0039 9208             44             MOV             8, C                    ; [21.0h] := F
+                      45             
+                      46     ; Comparison of the obtained result with the reference function
+003B 200305           47             JB              3, PTR_1                ; if [20.3h] == 1 then PC := ${PTR_1}
+003E 908000           48             MOV             DPTR, #8000h    ; DPTR := 8000h (The first half of the values of th
+                             e reference function)
+0041 0148             49             AJMP    PTR_2                   ; PC := ${PTR_2}
+0043                  50     PTR_1:
+0043 908001           51             MOV             DPTR, #8001h    ; DPTR := 8001h (The second half of the values of t
+                             he reference function)
+0046 C203             52             CLR             3
+0048                  53     PTR_2:
+A51 MACRO ASSEMBLER  LAB_1                                                                09/19/2023 21:13:47 PAGE     2
+
+0048 E0               54             MOVX    A, @DPTR                ; A := [DPTR] (Loading the required part of the ref
+                             erence function)
+0049 A920             55             MOV             R1, 20h                 ; (Preparing the shift counter)
+004B                  56     CYCLE_2:                                        ; Shift cycle
+004B B90002           57             CJNE    R1, #0, PTR_3   ; if R0 != 0 then PC := ${PTR_4}
+004E 0154             58             AJMP    PTR_4                   ; PC := ${PTR_5}
+0050                  59     PTR_3:
+0050 03               60             RR              A                               ; A -> (Right shift)
+0051 19               61             DEC             R1                              ; R1 := R1 - 1
+0052 014B             62             AJMP    CYCLE_2                 ; PC := ${CYCLE_2}
+0054                  63     PTR_4:
+0054 6221             64             XRL             21h, A                  ; [20h] := [20h] xor A
+0056 A208             65             MOV             C, 8                    ; C := [20.0h] (Check bit)
+0058 B80F02           66             CJNE    R0, #0Fh, PTR_5 ; if R0 != 0Fh then PC := ${PTR_6}
+005B 015B             67             AJMP    $                               ; PC := PC (End of programme)
+005D                  68     PTR_5:
+005D 08               69             INC             R0                              ; R0 := R0 + 1 (Next input value)
+005E 0113             70             AJMP    CYCLE_1                 ; PC := ${CYCLE_1}
+                      71             END                                             ; (End of the program text)
+A51 MACRO ASSEMBLER  LAB_1                                                                09/19/2023 21:13:47 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+CYCLE_1. . . . . .  C ADDR   0013H   A   
+CYCLE_2. . . . . .  C ADDR   004BH   A   
+P4 . . . . . . . .  N NUMB   00C0H   A   
+PTR_1. . . . . . .  C ADDR   0043H   A   
+PTR_2. . . . . . .  C ADDR   0048H   A   
+PTR_3. . . . . . .  C ADDR   0050H   A   
+PTR_4. . . . . . .  C ADDR   0054H   A   
+PTR_5. . . . . . .  C ADDR   005DH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
