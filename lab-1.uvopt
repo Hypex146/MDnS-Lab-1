@@ -137,10 +137,43 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDP51</Key>
-          <Name>(98=150,104,493,398,0)(82=237,213,445,328,0)(83=240,202,448,317,0)(84=255,218,463,333,0)(85=270,234,478,349,0)(5009=1434,174,1642,289,1)(5010=300,267,508,382,0)(80=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=-1,-1,-1,-1,0)(2006=-1,-1,-1,-1,0)(2007=-1,-1,-1,-1,0)(5012=-1,-1,-1,-1,0)(3005=-1,-1,-1,-1,0)(5015=-1,-1,-1,-1,0)(103=-1,-1,-1,-1,0)(102=-1,-1,-1,-1,0)</Name>
+          <Name>(98=150,104,493,398,0)(82=237,213,445,328,0)(83=240,202,448,317,0)(84=255,218,463,333,0)(85=270,234,478,349,0)(5009=59,492,267,607,1)(5010=300,267,508,382,0)(80=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=-1,-1,-1,-1,0)(2006=-1,-1,-1,-1,0)(2007=-1,-1,-1,-1,0)(5012=-1,-1,-1,-1,0)(3005=-1,-1,-1,-1,0)(5015=-1,-1,-1,-1,0)(103=-1,-1,-1,-1,0)(102=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>94</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>-16777087</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>lab-1.a51</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>100</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>-16777078</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>lab-1.a51</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+      </Breakpoint>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
@@ -153,7 +186,7 @@
         <Mm>
           <WinNumber>2</WinNumber>
           <SubType>0</SubType>
-          <ItemText>X:8000h</ItemText>
+          <ItemText>X:7FFAh</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow2>
