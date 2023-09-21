@@ -377,9 +377,9 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>lab-1.a51</FileName>
+              <FileName>main.a51</FileName>
               <FileType>2</FileType>
-              <FilePath>.\lab-1.a51</FilePath>
+              <FilePath>.\main.a51</FilePath>
             </File>
           </Files>
         </Group>

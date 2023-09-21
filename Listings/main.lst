@@ -1,0 +1,133 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 09/21/2023 14:57:22 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\main.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE main.a51 SET(SMALL) DEBUG PRINT(.\Listings\main.lst) OBJECT(.\Objects\m
+                      ain.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; F(x3, x2, x1, x0) = 2, 3, 4, 9, 11, 12, 13
+                       2     ; R0 - address of the reference function
+                       3     ; R1 - shift counter
+                       4     
+                       5     ; Start
+0000                   6             ORG             0000h                   ; Starting address
+  00C0                 7             P4              EQU 0C0h                ; Define P4
+                       8     
+                       9     ; Preparing the environment for work
+0000 908000           10             MOV             DPTR, #8000h    ; \;
+0003 7408             11             MOV             A, #08h                 ; | Loading an indirect address into extern
+                             al memory
+0005 F0               12             MOVX    @DPTR, A                ; /
+                      13     
+0006 908008           14             MOV             DPTR, #8008h    ; \;
+0009 7415             15             MOV             A, #15h                 ; | Loading the base address into external 
+                             memory
+000B F0               16             MOVX    @DPTR, A                ; /
+                      17     
+000C 908000           18             MOV             DPTR, #8000h    ; \;
+000F E0               19             MOVX    A, @DPTR                ; | Calculating the address of the reference
+0010 F582             20             MOV             DPL, A                  ; | function in external memory and writing
+0012 E0               21             MOVX    A, @DPTR                ; | this address to the register R0
+0013 F582             22             MOV             DPL, A                  ; |
+0015 A882             23             MOV             R0, DPL                 ; /
+                      24     
+0017 741C             25             MOV             A, #01Ch                ; \;
+0019 F0               26             MOVX    @DPTR, A                ; | Writing a reference function
+001A A3               27             INC             DPTR                    ; | to external memory
+001B 743A             28             MOV             A, #03Ah                ; |
+001D F0               29             MOVX    @DPTR, A                ; /
+                      30             
+                      31     ; Preparing input values
+001E                  32     PREPARING:
+001E 907FFB           33             MOV             DPTR, #7FFBh    ; \;
+0021 E0               34             MOVX    A, @DPTR                ; | Cyclic polling of the readiness bit
+0022 60FA             35             JZ              PREPARING               ; /
+0024 907FFA           36             MOV             DPTR, #7FFAh    ; \;
+0027 E0               37             MOVX    A, @DPTR                ; | Writing the input value to the internal memory
+0028 F520             38             MOV             20h, A                  ; /
+                      39     
+                      40     ; Calculation of a logical function
+002A A201             41             MOV             C, 1                    ;
+002C B002             42             ANL             C, /2                   ;
+002E B003             43             ANL             C, /3                   ;
+0030 9208             44             MOV             8, C                    ;
+0032 A202             45             MOV             C, 2                    ;
+0034 B000             46             ANL             C, /0                   ;
+0036 B001             47             ANL             C, /1                   ;
+0038 9209             48             MOV             9, C                    ;
+003A A202             49             MOV             C, 2                    ;
+003C B001             50             ANL             C, /1                   ;
+003E 8203             51             ANL             C, 3                    ;
+0040 920A             52             MOV             10, C                   ;
+0042 A200             53             MOV             C, 0                    ;
+0044 B002             54             ANL             C, /2                   ;
+0046 8203             55             ANL             C, 3                    ;
+A51 MACRO ASSEMBLER  MAIN                                                                 09/21/2023 14:57:22 PAGE     2
+
+0048 7208             56             ORL             C, 8                    ;
+004A 7209             57             ORL             C, 9                    ;
+004C 720A             58             ORL             C, 10                   ;
+004E 9208             59             MOV             8, C                    ;
+                      60     
+                      61     ; Comparison of the obtained result with the reference function
+0050 908000           62             MOV             DPTR, #8000h    ; \;Preparing the address of
+0053 8882             63             MOV             DPL, R0                 ; / the reference function
+0055 200302           64             JB              3, PTR_1                ; \;Checking which half
+0058 015D             65             AJMP    PTR_2                   ; / of the reference function to use
+005A                  66     PTR_1:
+005A A3               67             INC             DPTR                    ; \;Preparation for working with the
+005B C203             68             CLR             3                               ; / second half of the reference fu
+                             nction
+005D                  69     PTR_2:
+005D E0               70             MOVX    A, @DPTR                ; Writing part of the reference function to the acc
+                             umulator
+005E A920             71             MOV             R1, 20h                 ; Preparing the shift counter
+0060                  72     SHIFT:
+0060 B90002           73             CJNE    R1, #00h, PTR_3 ; \;
+0063 0169             74             AJMP    PTR_4                   ; |
+0065                  75     PTR_3:                                          ; | Shift the desired bit to
+0065 03               76             RR              A                               ; | the first (index=0) position
+0066 19               77             DEC             R1                              ; |
+0067 0160             78             AJMP    SHIFT                   ; /
+0069                  79     PTR_4:
+0069 A208             80             MOV             C, 8                    ; \;
+006B 92C0             81             MOV             P4.0, C                 ; | Output of the received result
+006D A2E0             82             MOV             C, ACC.0                ; | and the reference to the P4 channel
+006F B3               83             CPL             C                               ; |
+0070 92C1             84             MOV             P4.1, C                 ; /
+0072 907FFB           85             MOV             DPTR, #7FFBh    ; \;
+0075 7400             86             MOV             A, #00h                 ; | Resetting the ready bit to 0
+0077 F0               87             MOVX    @DPTR, A                ; /
+0078 907FFA           88             MOV             DPTR, #7FFAh    ; \;
+007B E0               89             MOVX    A, @DPTR                ; | The following set
+007C 04               90             INC             A                               ; | of input data
+007D F0               91             MOVX    @DPTR, A                ; /
+007E 011E             92             AJMP    PREPARING
+                      93     
+                      94     END
+A51 MACRO ASSEMBLER  MAIN                                                                 09/21/2023 14:57:22 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ACC. . . . . . . .  D ADDR   00E0H   A   
+DPL. . . . . . . .  D ADDR   0082H   A   
+P4 . . . . . . . .  N NUMB   00C0H   A   
+PREPARING. . . . .  C ADDR   001EH   A   
+PTR_1. . . . . . .  C ADDR   005AH   A   
+PTR_2. . . . . . .  C ADDR   005DH   A   
+PTR_3. . . . . . .  C ADDR   0065H   A   
+PTR_4. . . . . . .  C ADDR   0069H   A   
+SHIFT. . . . . . .  C ADDR   0060H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
