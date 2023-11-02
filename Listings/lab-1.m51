@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    09/21/2023  15:05:46  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    09/27/2023  12:50:15  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
@@ -19,7 +19,7 @@ LINK MAP OF MODULE:  .\Objects\lab-1 (MAIN)
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
-            CODE    0000H     0080H     ABSOLUTE     
+            CODE    0000H     007FH     ABSOLUTE     
 
 
 
@@ -59,7 +59,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\lab-1 (MAIN)
   C:0021H         LINE#         34
   C:0022H         LINE#         35
   C:0024H         LINE#         36
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  09/21/2023  15:05:46  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  09/27/2023  12:50:15  PAGE 2
 
 
   C:0027H         LINE#         37
@@ -103,17 +103,16 @@ SYMBOL TABLE OF MODULE:  .\Objects\lab-1 (MAIN)
   C:0070H         LINE#         84
   C:0072H         LINE#         85
   C:0075H         LINE#         86
-  C:0077H         LINE#         87
-  C:0078H         LINE#         88
-  C:007BH         LINE#         89
-  C:007CH         LINE#         90
-  C:007DH         LINE#         91
-  C:007EH         LINE#         92
+  C:0077H         LINE#         88
+  C:007AH         LINE#         89
+  C:007BH         LINE#         90
+  C:007CH         LINE#         91
+  C:007DH         LINE#         92
   -------         ENDMOD        MAIN
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0080H BYTE ( 6%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 007FH BYTE ( 6%) *
 ******************************************************************************
 
-Program Size: data=8.0 xdata=0 code=128
+Program Size: data=8.0 xdata=0 code=127
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
